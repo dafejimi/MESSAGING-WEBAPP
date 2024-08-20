@@ -1,5 +1,10 @@
 const express = require('express');
 const cors = require('cors');
+const corsConfig = {
+    origin: "*",
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+}
 
 const authRoutes = require("./routes/auth.js")
 
@@ -14,8 +19,8 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const messagingServiceSid= process.env.TWILIO_MESSAGING_SERVICE_SID;
 const twilioClient = require('twilio')(accountSid, authToken);
 
-
-app.use(cors());
+app.options("", cors(corsConfig))
+app.use(cors(corsConfig));
 app.use(express.json());
 app.use(express.urlencoded());
 
